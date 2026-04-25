@@ -66,16 +66,34 @@
       "squadraOspite": "Polisportiva Gandhi",
       "orario": "Ven 01/05 · 12:00",
       "campo": "SportArea",
-      "puntiCasa": null,
-      "puntiOspiti": null,
+      "puntiCasa": 18,
+      "puntiOspiti": 6,
       "giocata": false,
       "quarti": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        {
+          "casa": 12,
+          "ospite": 8
+        },
+        {
+          "casa": 47,
+          "ospite": 15
+        },
+        {
+          "casa": 18,
+          "ospite": 10
+        },
+        {
+          "casa": 9,
+          "ospite": 84
+        },
+        {
+          "casa": 16,
+          "ospite": 6
+        },
+        {
+          "casa": 100,
+          "ospite": 13
+        }
       ]
     },
     {
