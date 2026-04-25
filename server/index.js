@@ -3,7 +3,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
-const ADMIN_PASSWORD = "cuneo2026";
+const ADMIN_PASSWORD = "$2b$10$zRHdMX7ns0LnlZd2U1Wzqer1vngYt8K47/UL4ryVf45OvxffnV6mS";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
