@@ -305,7 +305,6 @@
         <button class="filter-btn active" data-giorno="tutti">Tutti</button>
         <button class="filter-btn" data-giorno="ven">Venerdì</button>
         <button class="filter-btn" data-giorno="sab">Sabato</button>
-        <button class="filter-btn" data-giorno="dom">Domenica</button>
       </div>
     </div>
     <div id="calendario-container">
@@ -390,7 +389,6 @@
     const o = p.orario || '';
     if (o.startsWith('Ven')) return 'ven';
     if (o.startsWith('Sab')) return 'sab';
-    if (o.startsWith('Dom')) return 'dom';
     return '';
   }
 
@@ -438,7 +436,7 @@
     if (gironeCalendario !== 'tutte') partite = partite.filter(p => p.girone === gironeCalendario);
     if (giornoCalendario !== 'tutti') partite = partite.filter(p => giornoPartita(p) === giornoCalendario);
 
-    const ordineGiorno = { ven: 0, sab: 1, dom: 2 };
+    const ordineGiorno = { ven: 0, sab: 1};
     partite.sort((a, b) => {
       const ga = ordineGiorno[giornoPartita(a)] ?? 99;
       const gb = ordineGiorno[giornoPartita(b)] ?? 99;
