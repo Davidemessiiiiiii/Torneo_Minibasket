@@ -68,7 +68,7 @@
       "campo": "SportArea",
       "puntiCasa": 18,
       "puntiOspiti": 6,
-      "giocata": false,
+      "giocata": true,
       "quarti": [
         {
           "casa": 12,
