@@ -44,18 +44,27 @@ h2 {
 
 <body>
 
-<h1>Admin Torneo</h1>
+    <div id="login">
+        <h2>Admin Login</h2>
+        <input type="password" id="pwd" placeholder="Password">
+        <button onclick="login()">Entra</button>
+    </div>
 
-<select id="partitaSelect"></select>
+    <div id="panel" style="display:none;">
+        <h1>Admin Torneo</h1>
 
-<h2>Punteggio finale</h2>
-<input type="number" id="casa" placeholder="Punti casa">
-<input type="number" id="ospite" placeholder="Punti ospite">
+        <select id="partitaSelect"></select>
 
-<h2>Quarti</h2>
-<div class="quarti" id="quarti"></div>
+        <h2>Punteggio finale</h2>
+        <input type="number" id="casa" placeholder="Punti casa">
+        <input type="number" id="ospite" placeholder="Punti ospite">
 
-<button onclick="salva()">SALVA</button>
+        <h2>Quarti</h2>
+        <div class="quarti" id="quarti"></div>
+
+        <button onclick="salva()">SALVA</button>
+    </div>
+
 
 <script>
 const API = "https://torneominibasket-production.up.railway.app";

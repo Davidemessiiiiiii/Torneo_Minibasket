@@ -3,6 +3,8 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
+const ADMIN_PASSWORD = "cuneo2026";
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 const DATA_FILE = path.join(__dirname, 'data.json');
@@ -20,6 +22,17 @@ function salvaDatai(dati) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(dati, null, 2));
 }
 
+// LOGIN
+app.post('/api/login', (req, res) => {
+  const { password } = req.body;
+
+  if (password === ADMIN_PASSWORD) {
+    return res.json({ success: true, token: "ok-admin" });
+  }
+
+  res.status(401).json({ success: false });
+});
+
 // GET - tutte le partite
 app.get('/api/partite', (req, res) => {
   const dati = leggiDati();
@@ -34,6 +47,11 @@ app.get('/api/gironi', (req, res) => {
 
 // PUT - aggiorna risultato di una partita
 app.put('/api/partite/:id', (req, res) => {
+  const { auth } = req.headers;
+
+  if (auth !== "ok-admin") {
+    return res.status(403).json({ errore: "Non autorizzato" });
+  }
   const dati = leggiDati();
   const id = parseInt(req.params.id);
   const { puntiCasa, puntiOspiti, quarti } = req.body;
