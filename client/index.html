@@ -394,39 +394,54 @@
   }
 
   function renderDettagli(p) {
-    const quarti = p.quarti || [null, null, null, null];
+    const quarti = p.quarti || [null, null, null, null, null, null];
+
     const haDettagli = quarti.some(q => q && (q.casa !== null || q.ospite !== null));
 
     if (!haDettagli) {
       return `<div class="no-dettagli">Dettaglio quarti non disponibile</div>`;
     }
 
-    const nomi = ['1° Quarto', '2° Quarto', '3° Quarto', '4° Quarto'];
+    const nomi = ['1° Quarto', '2° Quarto', '3° Quarto', '4° Quarto', '5° Quarto', '6° Quarto'];
+
     let rows = '';
+    let totaleCasa = 0;
+    let totaleOspite = 0;
+
     quarti.forEach((q, i) => {
       if (!q) return;
+
+      const casa = q.casa ?? '—';
+      const ospite = q.ospite ?? '—';
+
+      if (q.casa != null) totaleCasa += q.casa;
+      if (q.ospite != null) totaleOspite += q.ospite;
+
       const vinceCasa = q.casa > q.ospite;
       const vinceOspite = q.ospite > q.casa;
+
       rows += `<tr>
         <td>${nomi[i]}</td>
-        <td class="${vinceCasa ? 'vince' : ''}">${q.casa ?? '—'}</td>
-        <td class="${vinceOspite ? 'vince' : ''}">${q.ospite ?? '—'}</td>
+        <td class="${vinceCasa ? 'vince' : ''}">${casa}</td>
+        <td class="${vinceOspite ? 'vince' : ''}">${ospite}</td>
       </tr>`;
     });
 
     return `
       <table class="quarti-table">
-        <thead><tr>
-          <th></th>
-          <th>${p.squadraCasa.split(' ')[0]}</th>
-          <th>${p.squadraOspite.split(' ')[0]}</th>
-        </tr></thead>
+        <thead>
+          <tr>
+            <th></th>
+            <th>${p.squadraCasa.split(' ')[0]}</th>
+            <th>${p.squadraOspite.split(' ')[0]}</th>
+          </tr>
+        </thead>
         <tbody>
           ${rows}
           <tr class="totale">
-            <td>Totale</td>
-            <td>${p.puntiCasa}</td>
-            <td>${p.puntiOspiti}</td>
+            <td>Totale quarti</td>
+            <td>${totaleCasa}</td>
+            <td>${totaleOspite}</td>
           </tr>
         </tbody>
       </table>`;
