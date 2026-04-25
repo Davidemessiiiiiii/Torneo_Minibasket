@@ -351,9 +351,9 @@
       casa.pf += p.puntiCasa; casa.ps += p.puntiOspiti;
       ospite.pf += p.puntiOspiti; ospite.ps += p.puntiCasa;
       if (p.puntiCasa > p.puntiOspiti) {
-        casa.v++; casa.pts += 2; ospite.p++; ospite.pts += 1;
+        casa.v++; casa.pts += 3; ospite.p++; ospite.pts += 1;
       } else {
-        ospite.v++; ospite.pts += 2; casa.p++; casa.pts += 1;
+        ospite.v++; ospite.pts += 3; casa.p++; casa.pts += 1;
       }
     });
     return squadre.sort((a, b) => b.pts - a.pts || (b.pf - b.ps) - (a.pf - a.ps));
