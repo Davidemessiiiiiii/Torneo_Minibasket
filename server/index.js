@@ -65,7 +65,8 @@ app.put('/api/partite/:id', (req, res) => {
   res.json(partita);
 });
 
-app.post('/api/reset', (req, res) => {
+//PER RESETTARE TUTTO INDEX.HTML IN CASO DI ERRORE
+/*app.post('/api/reset', (req, res) => {
   const dati = leggiDati();
 
   dati.partite.forEach(p => {
@@ -77,7 +78,7 @@ app.post('/api/reset', (req, res) => {
 
   salvaDati(dati);
   res.json({ ok: true, message: "Torneo resettato" });
-});
+});*/
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
 app.get('/', (req, res) => {
