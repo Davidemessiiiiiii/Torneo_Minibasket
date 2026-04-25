@@ -22,7 +22,7 @@
     }
   ],
   "partite": [
-    { "id": 1, "girone": "A", "squadraCasa": "Cuneo Arancione", "squadraOspite": "Amatori Savigliano", "orario": "Ven 01/05 · 10:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
+    { "id": 1, "girone": "A", "squadraCasa": "Cuneo Arancione", "squadraOspite": "Amatori Savigliano", "orario": "Ven 01/05 · 10:00", "campo": "SportArea", "puntiCasa": 67, "puntiOspiti": 69, "giocata": true },
     { "id": 2, "girone": "A", "squadraCasa": "Gerardiana Monza", "squadraOspite": "Polisportiva Gandhi", "orario": "Ven 01/05 · 12:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
     { "id": 3, "girone": "A", "squadraCasa": "Amatori Savigliano", "squadraOspite": "Ranabo Basket", "orario": "Ven 01/05 · 14:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
     { "id": 4, "girone": "A", "squadraCasa": "Ranabo Basket", "squadraOspite": "Gerardiana Monza", "orario": "Ven 01/05 · 17:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
