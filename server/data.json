@@ -449,7 +449,7 @@
       "puntiCasa": null,
       "puntiOspiti": null,
       "giocata": false,
-      "daDefinire": true,
+      "daDefinire": false,
       "quarti": [
         null,
         null,
