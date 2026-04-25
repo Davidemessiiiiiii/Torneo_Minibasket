@@ -154,6 +154,13 @@ async function salva() {
   });
 
   alert("Salvato!");
+  document.getElementById("casa").value = "";
+  document.getElementById("ospite").value = "";
+
+  for (let i = 0; i < 6; i++) {
+    document.getElementById("casa"+i).value = "";
+    document.getElementById("ospite"+i).value = "";
+}
 }
 
 carica();
