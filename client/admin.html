@@ -104,7 +104,7 @@ async function carica() {
     select.appendChild(opt);
     });
 
-  select.addEventListener("change", caricaPartita);
+  select.onchange("change", caricaPartita);
   creaQuarti();
 }
 
@@ -150,19 +150,21 @@ async function salva() {
   }
 
   await fetch(API + "/api/partite/" + id, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      puntiCasa,
-      puntiOspiti,
-      quarti
-    })
-  });
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "auth": "ok-admin"
+        },
+        body: JSON.stringify({
+            puntiCasa,
+            puntiOspiti,
+            quarti
+        })
+    });
 
   alert("Salvato!");
   await carica();
+  caricaPartita();
 }
 
 carica();
