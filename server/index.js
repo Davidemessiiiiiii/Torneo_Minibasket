@@ -65,6 +65,20 @@ app.put('/api/partite/:id', (req, res) => {
   res.json(partita);
 });
 
+app.post('/api/reset', (req, res) => {
+  const dati = leggiDati();
+
+  dati.partite.forEach(p => {
+    p.puntiCasa = null;
+    p.puntiOspiti = null;
+    p.quarti = [];
+    p.giocata = false;
+  });
+
+  salvaDati(dati);
+  res.json({ ok: true, message: "Torneo resettato" });
+});
+
 app.use(express.static(path.join(__dirname, '..', 'client')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
