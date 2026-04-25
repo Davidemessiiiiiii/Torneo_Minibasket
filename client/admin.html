@@ -88,23 +88,15 @@ async function carica() {
   partite = await res.json();
 
   const select = document.getElementById("partitaSelect");
-    select.innerHTML = "";
 
   partite.forEach(p => {
     const opt = document.createElement("option");
     opt.value = p.id;
     opt.textContent = `${p.squadraCasa} vs ${p.squadraOspite}`;
-
-    if (p.giocata) {
-        opt.style.backgroundColor = "#444";
-        opt.style.color = "#aaa";
-        opt.textContent += " ✔";
-    }
-
     select.appendChild(opt);
-    });
+  });
 
-  select.onchange("change", caricaPartita);
+  select.addEventListener("change", caricaPartita);
   creaQuarti();
 }
 
@@ -150,21 +142,18 @@ async function salva() {
   }
 
   await fetch(API + "/api/partite/" + id, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            "auth": "ok-admin"
-        },
-        body: JSON.stringify({
-            puntiCasa,
-            puntiOspiti,
-            quarti
-        })
-    });
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      puntiCasa,
+      puntiOspiti,
+      quarti
+    })
+  });
 
   alert("Salvato!");
-  await carica();
-  caricaPartita();
 }
 
 carica();

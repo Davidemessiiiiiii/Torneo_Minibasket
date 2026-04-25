@@ -29,16 +29,34 @@
       "squadraOspite": "Amatori Savigliano",
       "orario": "Ven 01/05 · 10:00",
       "campo": "SportArea",
-      "puntiCasa": null,
-      "puntiOspiti": null,
-      "giocata": false,
+      "puntiCasa": 16,
+      "puntiOspiti": 8,
+      "giocata": true,
       "quarti": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        {
+          "casa": 12,
+          "ospite": 8
+        },
+        {
+          "casa": 7,
+          "ospite": 15
+        },
+        {
+          "casa": 18,
+          "ospite": 10
+        },
+        {
+          "casa": 9,
+          "ospite": 14
+        },
+        {
+          "casa": 11,
+          "ospite": 6
+        },
+        {
+          "casa": 8,
+          "ospite": 13
+        }
       ]
     },
     {
@@ -48,16 +66,34 @@
       "squadraOspite": "Polisportiva Gandhi",
       "orario": "Ven 01/05 · 12:00",
       "campo": "SportArea",
-      "puntiCasa": null,
-      "puntiOspiti": null,
-      "giocata": false,
+      "puntiCasa": 18,
+      "puntiOspiti": 6,
+      "giocata": true,
       "quarti": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        {
+          "casa": 12,
+          "ospite": 8
+        },
+        {
+          "casa": 47,
+          "ospite": 15
+        },
+        {
+          "casa": 18,
+          "ospite": 10
+        },
+        {
+          "casa": 9,
+          "ospite": 84
+        },
+        {
+          "casa": 16,
+          "ospite": 6
+        },
+        {
+          "casa": 100,
+          "ospite": 13
+        }
       ]
     },
     {
