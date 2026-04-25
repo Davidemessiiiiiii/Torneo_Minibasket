@@ -43,8 +43,8 @@ app.put('/api/partite/:id', (req, res) => {
     return res.status(404).json({ errore: 'Partita non trovata' });
   }
 
-  partita.puntiCasa = puntiCasa;
-  partita.puntiOspiti = puntiOspiti;
+  partita.puntiCasa = Number.isFinite(puntiCasa) ? puntiCasa : null;
+  partita.puntiOspiti = Number.isFinite(puntiOspiti) ? puntiOspiti : null;
   partita.quarti = quarti;
   partita.giocata = true;
 

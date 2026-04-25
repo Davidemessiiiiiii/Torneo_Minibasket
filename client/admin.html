@@ -121,7 +121,7 @@ async function salva() {
   }
 
   await fetch(API + "/api/partite/" + id, {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json"
     },
