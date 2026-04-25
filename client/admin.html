@@ -93,8 +93,15 @@ async function carica() {
     const opt = document.createElement("option");
     opt.value = p.id;
     opt.textContent = `${p.squadraCasa} vs ${p.squadraOspite}`;
+
+    if (p.giocata) {
+        opt.style.backgroundColor = "#444";
+        opt.style.color = "#aaa";
+        opt.textContent += " ✔";
+    }
+
     select.appendChild(opt);
-  });
+    });
 
   select.addEventListener("change", caricaPartita);
   creaQuarti();
