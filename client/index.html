@@ -256,6 +256,29 @@
       animation: livepulse 1.5s infinite;
     }
     @keyframes livepulse { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+
+    .legenda-classifica {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .legenda-item {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .legenda-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -347,23 +370,58 @@
     }
   }
 
+  function calcolaPunteggioPartita(quarti) {
+  let casa = 0, ospite = 0;
+  (quarti || []).forEach(q => {
+    if (!q || q.casa == null || q.ospite == null) return;
+    if (q.casa > q.ospite)      { casa += 3; ospite += 1; }
+    else if (q.casa < q.ospite) { casa += 1; ospite += 3; }
+    else                         { casa += 2; ospite += 2; }
+  });
+  return { casa, ospite };
+}
+
+function calcolaCanestri(quarti) {
+  let casa = 0, ospite = 0;
+  (quarti || []).forEach(q => {
+    if (!q) return;
+    casa   += q.casa   ?? 0;
+    ospite += q.ospite ?? 0;
+  });
+  return { casa, ospite };
+}
+
   // ── CLASSIFICA ──────────────────────────────────────────────
   function calcolaClassifica(girone) {
     const squadre = girone.squadre.map(nome => ({ nome, g:0, v:0, p:0, pf:0, ps:0, pts:0 }));
     const lettera = girone.nome.slice(-1);
+
     datiPartite.filter(p => p.girone === lettera && p.giocata).forEach(p => {
       const casa   = squadre.find(s => s.nome === p.squadraCasa);
       const ospite = squadre.find(s => s.nome === p.squadraOspite);
       if (!casa || !ospite) return;
+
       casa.g++; ospite.g++;
-      casa.pf += p.puntiCasa; casa.ps += p.puntiOspiti;
-      ospite.pf += p.puntiOspiti; ospite.ps += p.puntiCasa;
-      if (p.puntiCasa > p.puntiOspiti) {
-        casa.v++; casa.pts += 3; ospite.p++; ospite.pts += 1;
+
+      // Canestri reali per PF/PS
+      const can = calcolaCanestri(p.quarti);
+      casa.pf   += can.casa;   casa.ps   += can.ospite;
+      ospite.pf += can.ospite; ospite.ps += can.casa;
+
+      // Punteggio partita dai quarti → decide chi vince
+      const pt = calcolaPunteggioPartita(p.quarti);
+      if (pt.casa > pt.ospite) {
+        casa.v++;   casa.pts   += 3;
+        ospite.p++; ospite.pts += 1;
+      } else if (pt.ospite > pt.casa) {
+        ospite.v++; ospite.pts += 3;
+        casa.p++;   casa.pts   += 1;
       } else {
-        ospite.v++; ospite.pts += 3; casa.p++; casa.pts += 1;
+        // pareggio partita (teoricamente impossibile con 6 quarti dispari, ma per sicurezza)
+        casa.pts += 2; ospite.pts += 2;
       }
     });
+
     return squadre.sort((a, b) => b.pts - a.pts || (b.pf - b.ps) - (a.pf - a.ps));
   }
 
@@ -383,13 +441,18 @@
       </tr>`;
     }).join('');
     document.getElementById('classifica-container').innerHTML = `
-      <table class="classifica-table">
-        <thead><tr>
-          <th>Squadra</th><th>G</th><th>V</th><th>P</th>
-          <th class="col-pf">PF</th><th class="col-ps">PS</th><th class="col-diff">+/-</th><th>Pts</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>`;
+    <div class="legenda-classifica">
+      <span class="legenda-item"><span class="legenda-dot"></span>Vittoria partita = 3 pt</span>
+      <span class="legenda-item"><span class="legenda-dot"></span>Sconfitta partita = 1 pt</span>
+      <span class="legenda-item"><span class="legenda-dot"></span>Il risultato si calcola dai quarti</span>
+    </div>
+    <table class="classifica-table">
+      <thead><tr>
+        <th>Squadra</th><th>G</th><th>V</th><th>P</th>
+        <th class="col-pf">PF</th><th class="col-ps">PS</th><th class="col-diff">+/-</th><th>Pts</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
   }
 
   // ── CALENDARIO ──────────────────────────────────────────────
