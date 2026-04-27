@@ -539,6 +539,12 @@ function calcolaCanestri(quarti) {
   }
 
   function renderCalendario() {
+    // Salva quali pannelli sono aperti prima del re-render
+    const aperti = new Set(
+      [...document.querySelectorAll('.dettagli-panel.open')]
+        .map(el => el.id.replace('dettagli-', ''))
+    );
+
     let partite = [...datiPartite];
     if (gironeCalendario !== 'tutte') partite = partite.filter(p => p.girone === gironeCalendario);
     if (giornoCalendario !== 'tutti') partite = partite.filter(p => giornoPartita(p) === giornoCalendario);
@@ -629,7 +635,16 @@ function calcolaCanestri(quarti) {
       });
     });
     html += '</div>';
+
     document.getElementById('calendario-container').innerHTML = html;
+
+    // Riapre i pannelli che erano aperti prima del refresh
+    aperti.forEach(id => {
+      const panel = document.getElementById('dettagli-' + id);
+      const btn = panel?.nextElementSibling?.querySelector('.btn-dettagli');
+      if (panel) panel.classList.add('open');
+      if (btn) btn.classList.add('open');
+    });
   }
 
   function toggleDettagli(btn, id) {
