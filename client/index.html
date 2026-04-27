@@ -279,6 +279,13 @@
       background: var(--orange);
       flex-shrink: 0;
     }
+
+    .canestri-sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.04em;
+    }
   </style>
 </head>
 <body>
@@ -373,6 +380,19 @@
   function calcolaPunteggioPartita(quarti) {
   let casa = 0, ospite = 0;
   (quarti || []).forEach(q => {
+    if (!q || q.casa == null || q.ospite == null) return;
+    if (q.casa > q.ospite)      { casa += 3; ospite += 1; }
+    else if (q.casa < q.ospite) { casa += 1; ospite += 3; }
+    else                         { casa += 2; ospite += 2; }
+  });
+  return { casa, ospite };
+}
+
+function calcolaPunteggioPartitaLive(quarti, quartoAttuale) {
+  let casa = 0, ospite = 0;
+  (quarti || []).forEach((q, i) => {
+    // Solo i quarti già conclusi, non quello in corso
+    if (i >= quartoAttuale - 1) return;
     if (!q || q.casa == null || q.ospite == null) return;
     if (q.casa > q.ospite)      { casa += 3; ospite += 1; }
     else if (q.casa < q.ospite) { casa += 1; ospite += 3; }
@@ -551,11 +571,22 @@ function calcolaCanestri(quarti) {
       if (!gruppi[g]) return;
       html += `<div class="giorno-header">${labelGiorni[g]}</div>`;
       gruppi[g].forEach(p => {
-        const score = p.giocata
-          ? `<span class="score">${p.puntiCasa} – ${p.puntiOspiti}</span>`
-          : p.live
-            ? `<span class="score">${p.puntiCasa} – ${p.puntiOspiti}</span>`
-            : `<span class="score pending">vs</span>`;
+        let score;
+        if (p.giocata) {
+          const pt = calcolaPunteggioPartita(p.quarti);
+          const can = calcolaCanestri(p.quarti);
+          score = `
+            <span class="score">${pt.casa} – ${pt.ospite}</span>
+            <span class="canestri-sub">canestri: ${can.casa}-${can.ospite}</span>`;
+        } else if (p.live) {
+          const pt = calcolaPunteggioPartitaLive(p.quarti, p.quartoAttuale);
+          const can = calcolaCanestri(p.quarti);
+          score = `
+            <span class="score">${pt.casa} – ${pt.ospite}</span>
+            <span class="canestri-sub">canestri: ${can.casa}-${can.ospite}</span>`;
+        } else {
+          score = `<span class="score pending">vs</span>`;
+        }
 
         let badge = '';
         if (p.live) {
