@@ -485,7 +485,7 @@ function calcolaCanestri(quarti) {
     if (!q) return;
     casa   += q.casa   ?? 0;
     ospite += q.ospite ?? 0;
-  });//ciao
+  });
   return { casa, ospite };
 }
 
@@ -512,17 +512,23 @@ function chiudiLegenda(event) {
       casa.pf   += can.casa;   casa.ps   += can.ospite;
       ospite.pf += can.ospite; ospite.ps += can.casa;
 
-      // Punteggio partita dai quarti → decide chi vince
+      // Punteggio partita dai quarti
       const pt = calcolaPunteggioPartita(p.quarti);
-      if (pt.casa > pt.ospite) {
-        casa.v++;   casa.pts   += 3;
-        ospite.p++; ospite.pts += 1;
-      } else if (pt.ospite > pt.casa) {
-        ospite.v++; ospite.pts += 3;
-        casa.p++;   casa.pts   += 1;
+
+      // In caso di parità nei punti quarti, decide il totale canestri
+      let vinceCasa;
+      if (pt.casa !== pt.ospite) {
+        vinceCasa = pt.casa > pt.ospite;
       } else {
-        // pareggio partita (teoricamente impossibile con 6 quarti dispari, ma per sicurezza)
-        casa.pts += 2; ospite.pts += 2;
+        vinceCasa = can.casa > can.ospite;
+      }
+
+      if (vinceCasa) {
+        casa.v++;   casa.pts += 3;
+        ospite.p++; ospite.pts += 1;
+      } else {
+        ospite.v++; ospite.pts += 3;
+        casa.p++;   casa.pts += 1;
       }
     });
 
