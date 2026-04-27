@@ -49,7 +49,7 @@ app.get('/api/gironi', (req, res) => {
 app.put('/api/partite/:id', (req, res) => {
   const dati = leggiDati();
   const id = parseInt(req.params.id);
-  const { puntiCasa, puntiOspiti, quarti } = req.body;
+  const { puntiCasa, puntiOspiti, quarti, giocata, live, quartoAttuale } = req.body;
 
   const partita = dati.partite.find(p => p.id === id);
   if (!partita) {
@@ -58,8 +58,10 @@ app.put('/api/partite/:id', (req, res) => {
 
   partita.puntiCasa = Number.isFinite(puntiCasa) ? puntiCasa : null;
   partita.puntiOspiti = Number.isFinite(puntiOspiti) ? puntiOspiti : null;
-  partita.quarti = quarti;
-  partita.giocata = true;
+  partita.quarti = quarti ?? partita.quarti;
+  partita.giocata = giocata ?? partita.giocata;
+  partita.live = live ?? partita.live;
+  partita.quartoAttuale = quartoAttuale ?? partita.quartoAttuale;
 
   salvaDati(dati);
   res.json(partita);
