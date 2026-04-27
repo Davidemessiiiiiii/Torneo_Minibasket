@@ -589,17 +589,17 @@ function calcolaCanestri(quarti) {
         if (p.giocata) {
           const pt = calcolaPunteggioPartita(p.quarti);
           const can = calcolaCanestri(p.quarti);
-          score = `
-            <span class="score">${pt.casa} – ${pt.ospite}</span>
-            <span class="canestri-sub">🏀 ${can.casa} – ${can.ospite} canestri</span>;
+          const scoreHtml = '<span class="score">' + pt.casa + ' – ' + pt.ospite + '</span>';
+          const canHtml = '<span class="canestri-sub">🏀 ' + can.casa + ' – ' + can.ospite + ' canestri</span>';
+          score = scoreHtml + canHtml;
         } else if (p.live) {
           const pt = calcolaPunteggioPartitaLive(p.quarti, p.quartoAttuale);
           const can = calcolaCanestri(p.quarti);
-          score = `
-            <span class="score">${pt.casa} – ${pt.ospite}</span>
-            <span class="canestri-sub">🏀 ${can.casa} – ${can.ospite} canestri</span>;
+          const scoreHtml = '<span class="score">' + pt.casa + ' – ' + pt.ospite + '</span>';
+          const canHtml = '<span class="canestri-sub">🏀 ' + can.casa + ' – ' + can.ospite + ' canestri</span>';
+          score = scoreHtml + canHtml;
         } else {
-          score = `<span class="score pending">vs</span>`;
+          score = '<span class="score pending">vs</span>';
         }
 
         let badge = '';
