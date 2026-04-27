@@ -281,10 +281,18 @@
     }
 
     .canestri-sub {
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       color: var(--muted);
       font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
       letter-spacing: 0.04em;
+    }
+
+    .terminata-badge {
+      font-size: 0.68rem; font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); background: var(--mid);
+      border-radius: 4px; padding: 0.15rem 0.5rem; display: inline-block;
     }
   </style>
 </head>
@@ -583,13 +591,13 @@ function calcolaCanestri(quarti) {
           const can = calcolaCanestri(p.quarti);
           score = `
             <span class="score">${pt.casa} – ${pt.ospite}</span>
-            <span class="canestri-sub">canestri: ${can.casa}-${can.ospite}</span>`;
+            <span class="canestri-sub">🏀 ${can.casa} – ${can.ospite} canestri</span>;
         } else if (p.live) {
           const pt = calcolaPunteggioPartitaLive(p.quarti, p.quartoAttuale);
           const can = calcolaCanestri(p.quarti);
           score = `
             <span class="score">${pt.casa} – ${pt.ospite}</span>
-            <span class="canestri-sub">canestri: ${can.casa}-${can.ospite}</span>`;
+            <span class="canestri-sub">🏀 ${can.casa} – ${can.ospite} canestri</span>;
         } else {
           score = `<span class="score pending">vs</span>`;
         }
@@ -601,6 +609,9 @@ function calcolaCanestri(quarti) {
           badge = `<span class="finale-badge">${p.label || 'Finale'}</span>`;
         } else if (gironeCalendario === 'tutte') {
           badge = `<span class="girone-badge">Girone ${p.girone}</span>`;
+        }
+        if (p.giocata) {
+          badge += ` <span class="terminata-badge">Terminata</span>`;
         }
 
         const mostraDettagli = p.giocata;
