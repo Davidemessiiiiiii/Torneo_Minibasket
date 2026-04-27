@@ -294,6 +294,56 @@
       color: var(--muted); background: var(--mid);
       border-radius: 4px; padding: 0.15rem 0.5rem; display: inline-block;
     }
+
+    #modale-legenda {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999; padding: 1.5rem;
+    }
+    .modale-box {
+      background: var(--dark2); border: 1px solid var(--mid);
+      border-radius: 12px; padding: 1.75rem;
+      max-width: 420px; width: 100%; position: relative;
+    }
+    .modale-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none; color: var(--muted);
+      font-size: 1.1rem; cursor: pointer; line-height: 1;
+    }
+    .modale-close:hover { color: var(--white); }
+    .modale-titolo {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+      font-size: 1.4rem; color: var(--white); margin-bottom: 1rem;
+    }
+    .modale-testo {
+      font-size: 0.9rem; color: var(--light); line-height: 1.5;
+      margin-bottom: 0.85rem;
+    }
+    .modale-regole {
+      background: var(--dark); border-radius: 8px;
+      padding: 0.85rem 1rem; margin-bottom: 0.85rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .modale-regola {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.9rem; color: var(--light);
+    }
+    .modale-pt {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+      font-size: 1rem; min-width: 36px;
+    }
+    .modale-pt.arancio { color: var(--orange); }
+    .modale-pt.grigio  { color: var(--muted); }
+    .btn-legenda {
+      background: none; border: 1px solid var(--mid);
+      border-radius: 50%; width: 26px; height: 26px;
+      color: var(--muted); font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; display: inline-flex;
+      align-items: center; justify-content: center;
+      transition: all 0.15s; flex-shrink: 0;
+    }
+    .btn-legenda:hover { color: var(--white); border-color: var(--muted); }
   </style>
 </head>
 <body>
@@ -340,12 +390,15 @@
   <!-- CALENDARIO -->
   <div class="tab-panel" id="tab-calendario">
     <div class="filtri">
-      <div class="filtri-row">
-        <span class="filtri-label">Girone</span>
-        <button class="filter-btn active" data-girone-cal="tutte">Tutti</button>
-        <button class="filter-btn" data-girone-cal="A">Girone A</button>
-        <button class="filter-btn" data-girone-cal="B">Girone B</button>
-        <button class="filter-btn" data-girone-cal="finale">Finali</button>
+      <div class="filtri-row" style="justify-content: space-between; align-items: center;">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+          <span class="filtri-label">Girone</span>
+          <button class="filter-btn active" data-girone-cal="tutte">Tutti</button>
+          <button class="filter-btn" data-girone-cal="A">Girone A</button>
+          <button class="filter-btn" data-girone-cal="B">Girone B</button>
+          <button class="filter-btn" data-girone-cal="finale">Finali</button>
+        </div>
+        <button class="btn-legenda" onclick="document.getElementById('modale-legenda').style.display='flex'">?</button>
       </div>
       <div class="filtri-row">
         <span class="filtri-label">Giorno</span>
@@ -358,6 +411,23 @@
       <div class="stato"><div class="spinner"></div>Caricamento...</div>
     </div>
   </div>
+
+  <!-- MODALE LEGENDA -->
+<div id="modale-legenda" style="display:none" onclick="chiudiLegenda(event)">
+  <div class="modale-box">
+    <button class="modale-close" onclick="document.getElementById('modale-legenda').style.display='none'">✕</button>
+    <h2 class="modale-titolo">Come funziona il punteggio?</h2>
+    <p class="modale-testo">Ogni partita è divisa in <strong>6 quarti</strong>. Per ogni quarto viene assegnato un punteggio:</p>
+    <div class="modale-regole">
+      <div class="modale-regola"><span class="modale-pt arancio">3 pt</span><span>al vincitore del quarto</span></div>
+      <div class="modale-regola"><span class="modale-pt grigio">2 pt</span><span>a ciascuno in caso di pareggio</span></div>
+      <div class="modale-regola"><span class="modale-pt grigio">1 pt</span><span>al perdente del quarto</span></div>
+    </div>
+    <p class="modale-testo">La somma dei punti di tutti e 6 i quarti determina il <strong>risultato finale</strong> della partita (es. 15 – 9).</p>
+    <p class="modale-testo">Chi ha il punteggio più alto <strong>vince la partita</strong> e guadagna <strong>3 punti in classifica</strong>. Chi perde ne guadagna <strong>1</strong>.</p>
+    <p class="modale-testo" style="color:var(--muted); font-size:0.82rem;">I canestri reali (🏀) sono indicati sotto il risultato a titolo informativo.</p>
+  </div>
+</div>
 
 </main>
 
@@ -417,6 +487,12 @@ function calcolaCanestri(quarti) {
     ospite += q.ospite ?? 0;
   });
   return { casa, ospite };
+}
+
+function chiudiLegenda(event) {
+  if (event.target === document.getElementById('modale-legenda')) {
+    document.getElementById('modale-legenda').style.display = 'none';
+  }
 }
 
   // ── CLASSIFICA ──────────────────────────────────────────────
