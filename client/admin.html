@@ -183,6 +183,7 @@ input, select {
       </div>
     </div>
 
+    <button class="btn btn-gray btn-small" onclick="quartoPrecedente()">⏮ Quarto precedente</button>
     <button class="btn btn-gray btn-small" onclick="quartoSuccessivo()">⏭ Quarto successivo</button>
     <button class="btn btn-red" onclick="terminaPartita()">🏁 Termina partita</button>
   </div>
@@ -326,6 +327,16 @@ function aggiungi(squadra, punti) {
   } else {
     liveState.quarti[q].ospite = Math.max(0, liveState.quarti[q].ospite + punti);
   }
+  aggiornaUI();
+  inviaLive();
+}
+
+function quartoPrecedente() {
+  if (liveState.quartoAttuale <= 1) {
+    alert("Sei già al primo quarto.");
+    return;
+  }
+  liveState.quartoAttuale--;
   aggiornaUI();
   inviaLive();
 }
