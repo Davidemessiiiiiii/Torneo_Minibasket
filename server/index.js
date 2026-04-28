@@ -1,3 +1,6 @@
+// © 2026 Davide Messi - Torneo Minibasket
+// Tutti i diritti riservati. Vietata la riproduzione.
+
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
