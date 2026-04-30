@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8080;
 const DATA_FILE = path.join(__dirname, 'data.json');
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json());//ciao
 
 // Funzione di utilità per leggere i dati
 function leggiDati() {
