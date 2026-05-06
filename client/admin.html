@@ -128,6 +128,10 @@ input, select {
       <span class="icon">🔴</span>
       Live
     </button>
+    <button class="btn-modalita" onclick="mostraRinomina()" style="grid-column: span 2;">
+      <span class="icon">✏️</span>
+      Rinomina squadre
+    </button>
   </div>
 </div>
 
@@ -145,6 +149,21 @@ input, select {
   <div id="quarti-terminata"></div>
 
   <button class="btn btn-orange" onclick="salvaTerminata()">SALVA</button>
+</div>
+
+<!-- RINOMINA SQUADRE -->
+<div id="panel-rinomina" style="display:none">
+  <button class="back-btn" onclick="torna()">← Indietro</button>
+  <h2>Rinomina squadre</h2>
+  <select id="partitaRinominaSelect" onchange="caricaRinomina()"></select>
+
+  <h2>Nome casa</h2>
+  <input type="text" id="nuovo-casa" placeholder="Nome squadra casa">
+
+  <h2>Nome ospite</h2>
+  <input type="text" id="nuovo-ospite" placeholder="Nome squadra ospite">
+
+  <button class="btn btn-orange" onclick="salvaRinomina()">SALVA NOMI</button>
 </div>
 
 <!-- LIVE -->
@@ -218,6 +237,7 @@ async function carica() {
 function torna() {
   document.getElementById("panel-terminata").style.display = "none";
   document.getElementById("panel-live").style.display = "none";
+  document.getElementById("panel-rinomina").style.display = "none";
   document.getElementById("live-board").style.display = "none";
   document.getElementById("scelta").style.display = "block";
 }
@@ -392,6 +412,34 @@ function calcolaTotali() {
     casa: acc.casa + (q.casa || 0),
     ospite: acc.ospite + (q.ospite || 0)
   }), { casa: 0, ospite: 0 });
+}
+
+// ── RINOMINA SQUADRE ─────────────────────────────────────────
+function mostraRinomina() {
+  document.getElementById("scelta").style.display = "none";
+  document.getElementById("panel-rinomina").style.display = "block";
+  popolaSelect("partitaRinominaSelect");
+  caricaRinomina();
+}
+
+function caricaRinomina() {
+  const id = document.getElementById("partitaRinominaSelect").value;
+  const p = partite.find(x => x.id == id);
+  document.getElementById("nuovo-casa").value = p.squadraCasa;
+  document.getElementById("nuovo-ospite").value = p.squadraOspite;
+}
+
+async function salvaRinomina() {
+  const id = document.getElementById("partitaRinominaSelect").value;
+  const squadraCasa = document.getElementById("nuovo-casa").value.trim();
+  const squadraOspite = document.getElementById("nuovo-ospite").value.trim();
+  await fetch(API + "/api/partite/" + id, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ squadraCasa, squadraOspite })
+  });
+  alert("Nomi salvati!");
+  await carica();
 }
 
 function aggiornaUI() {
