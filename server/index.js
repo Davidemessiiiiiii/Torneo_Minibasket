@@ -68,6 +68,7 @@ app.put('/api/partite/:id', (req, res) => {
 
   if (squadraCasa) partita.squadraCasa = squadraCasa;
   if (squadraOspite) partita.squadraOspite = squadraOspite;
+  if (label) partita.label = label;
 
   salvaDati(dati);
   res.json(partita);

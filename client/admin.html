@@ -157,6 +157,9 @@ input, select {
   <h2>Rinomina squadre</h2>
   <select id="partitaRinominaSelect" onchange="caricaRinomina()"></select>
 
+  <h2>Label finale (es. 1° vs 2°)</h2>
+  <input type="text" id="nuovo-label" placeholder="Label finale">
+
   <h2>Nome casa</h2>
   <input type="text" id="nuovo-casa" placeholder="Nome squadra casa">
 
@@ -425,18 +428,20 @@ function mostraRinomina() {
 function caricaRinomina() {
   const id = document.getElementById("partitaRinominaSelect").value;
   const p = partite.find(x => x.id == id);
+  document.getElementById("nuovo-label").value = p.label ?? "";
   document.getElementById("nuovo-casa").value = p.squadraCasa;
   document.getElementById("nuovo-ospite").value = p.squadraOspite;
 }
 
 async function salvaRinomina() {
   const id = document.getElementById("partitaRinominaSelect").value;
+  const label = document.getElementById("nuovo-label").value.trim();
   const squadraCasa = document.getElementById("nuovo-casa").value.trim();
   const squadraOspite = document.getElementById("nuovo-ospite").value.trim();
   await fetch(API + "/api/partite/" + id, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ squadraCasa, squadraOspite })
+    body: JSON.stringify({ squadraCasa, squadraOspite, label })
   });
   alert("Nomi salvati!");
   await carica();
