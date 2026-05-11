@@ -345,16 +345,6 @@
     }
     .btn-legenda:hover { color: var(--white); border-color: var(--muted); }
   </style>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F5D250YKLK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-F5D250YKLK');
-  </script>
 </head>
 <body>
 
@@ -764,8 +754,6 @@ function chiudiLegenda(event) {
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-      
-      gtag('event', 'click_tab', { tab_name: btn.dataset.tab });
     });
   });
 
